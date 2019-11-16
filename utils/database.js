@@ -7,16 +7,155 @@ export default class Database  {
     constructor() {
         // Initialize Firebase
         this.firebaseConfig = {
-            apiKey: "AIzaSyBgta2Y9ETxTvg-3UoprSbKcpZviQHUo28",
-            authDomain: "questionairea-ed546.firebaseapp.com",
-            databaseURL: "https://questionairea-ed546.firebaseio.com",
-            projectId: "questionairea-ed546",
-            storageBucket: "questionairea-ed546.appspot.com/"
+            apiKey: "AIzaSyBphJzFqoU1226G6k-osgkkSibiHD8Cf50",
+            authDomain: "peerwalk-56316.firebaseapp.com",
+            databaseURL: "https://peerwalk-56316.firebaseio.com",
+            projectId: "peerwalk-56316",
+            storageBucket: "peerwalk-56316.appspot.com",
+            messagingSenderId: "530706802982",
+            appId: "1:530706802982:web:a191560b555d13569479e7",
+            measurementId: "G-9NMGPWMGEB"
         };
         firebase.initializeApp(this.firebaseConfig);
         this.state = {
             isReady: false
         };
+        const db = firebase.firestore();
+    }
+
+
+    // createWalk = (data) => {
+    //     let newDate: firebase.firestore.Timestamp.fromDate(data[date]);
+    //     delete data[date];
+    //     data[date] = newDate;
+    //     let setDoc = this.db.collection('walks').add(data);
+    //     Alert.alert('Walk created successfully!');
+    //
+    //     // TODO: Update new walk ID to other collections
+    // };
+
+    joinWalk =(userID, walkID) => {
+        const user = this.db.collection("user").doc(userID);
+        let getDoc = user.get()
+            .then(doc => {
+                if (!doc.exists) {
+                    console.log('No such document!');
+                } else {
+                    let data = doc.data();
+                    let walksArr = data["Walks"];
+                    walksArr.push(walkID);
+                    console.log("walkID pushed: ", walkID);
+                    doc.set({Walks: walksArr}, {merge: true});
+                    console.log("Document successfully received!");
+                }
+            })
+            .catch(err => {
+                console.log('Error getting document', err);
+            });
+        const walk = this.db.collection("walks").doc(walkID);
+        let walkDoc = walk.get()
+            .then(doc => {
+                if (!doc.exists) {
+                    console.log('No such document!');
+                } else {
+                    let data = doc.data();
+                    let walksArr = data["Walkers"];
+                    walksArr.push(userID);
+                    console.log("userID pushed: ", userID)
+                    doc.set({Walkers: walksArr}, {merge: true});
+                    console.log("Document successfully received!");
+                }
+            })
+            .catch(err => {
+                console.log('Error getting document', err);
+            });
+    }
+
+    leaveWalk =(userID, walkID) => {
+        const user = this.db.collection("user").doc(userID);
+        let getDoc = user.get()
+            .then(doc => {
+                if (!doc.exists) {
+                    console.log('No such document!');
+                } else {
+                    let data = doc.data();
+                    let walksArr = data["Walks"];
+                    delete walksArr[walkID];
+                    console.log("walkID pushed: ", walkID)
+                    doc.set({Walks: walksArr}, {merge: true});
+                    console.log("Document successfully received!");
+                }
+            })
+            .catch(err => {
+                console.log('Error getting document', err);
+            });
+    }
+
+    getNearbyWalks = (location) => {
+        // From location get a list of 10 nearby walks with a radius of 5
+
+        const walk = this.db.collection("walks");
+        let getDoc = walk.get()
+            .then(doc => {
+                if (!doc.exists) {
+                    console.log('No such document!');
+                } else {
+                    console.log('Document data:', doc.data());
+                    return doc.data()
+                }
+            })
+            .catch(err => {
+                console.log('Error getting document', err);
+            });
+    }
+
+    getUserWalkIDs = (userID) => {
+        const user = this.db.collection("user").doc(userID);
+        let getDoc = user.get()
+            .then(doc => {
+                if (!doc.exists) {
+                    console.log('No such document!');
+                } else {
+                    let data = doc.data();
+                    console.log("Document successfully received!");
+                    return data["walks"]
+                }
+            })
+            .catch(err => {
+                console.log('Error getting document', err);
+            });
+    }
+
+    getWalk = (walkID) => {
+        const walk = this.db.collection("walks").doc(walkID);
+        let getDoc = walk.get()
+            .then(doc => {
+                if (!doc.exists) {
+                    console.log('No such document!');
+                } else {
+                    console.log('Document data:', doc.data());
+                    return doc.data()
+                }
+            })
+            .catch(err => {
+                console.log('Error getting document', err);
+            });
+    }
+
+    getProfile = (userID) => {
+        const user = this.db.collection("users").doc(userID);
+        let getDoc = user.get()
+            .then(doc => {
+                if (!doc.exists) {
+                    console.log('No such document!');
+                } else {
+                    console.log('Document data:', doc.data());
+                    return doc.data()
+                }
+            })
+            .catch(err => {
+                console.log('Error getting document', err);
+            });
     }
 
     firebaseLogIn = (loginData) => {

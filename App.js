@@ -18,7 +18,7 @@ export default class HomeScreen extends React.Component {
         console.log(data);
         const userData = new Promise(this.db.firebaseLogIn(data))
             .then(
-                this.setState({userData: userData});
+                this.setState({userData: userData})
             )
         console.log("state userData: ", this.state.userData);
         console.log("======================");
@@ -53,6 +53,10 @@ export default class HomeScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <Text style={{fontWeight: 'bold', fontSize: 20}}>Login Page!</Text>
+                <Button
+                    title="Edit Firebase Question"
+                    onPress={() => db.joinWalk("sbanka@berkeley.edu","dCjQm6tEWiM5P1Wp7Y3Q")}
+                />
                 <TextInput
                     style={{margin: 20, height: 40, width: 200, borderColor: 'gray', borderWidth: 1 }}
                     placeholder = "Enter email here"
