@@ -20,22 +20,21 @@ export default class Database  {
         this.state = {
             isReady: false
         };
-        const db = firebase.firestore();
     }
 
 
-    // createWalk = (data) => {
-    //     let newDate: firebase.firestore.Timestamp.fromDate(data[date]);
-    //     delete data[date];
-    //     data[date] = newDate;
-    //     let setDoc = this.db.collection('walks').add(data);
-    //     Alert.alert('Walk created successfully!');
-    //
-    //     // TODO: Update new walk ID to other collections
-    // };
+    createWalk = (data) => {
+        // let newDate: firebase.firestore.Timestamp.fromDate(data[date]);
+        // delete data[date];
+        // data[date] = newDate;
+        let setDoc = this.db.collection('walks').add(data);
+        Alert.alert('Walk created successfully!');
 
-    joinWalk =(userID, walkID) => {
-        const user = this.db.collection("user").doc(userID);
+        // TODO: Update new walk ID to other collections
+    };
+    db = firebase.firestore();
+    joinWalk = (userID, walkID) => {
+        const user = db.collection("user").doc(userID);
         let getDoc = user.get()
             .then(doc => {
                 if (!doc.exists) {
@@ -52,7 +51,7 @@ export default class Database  {
             .catch(err => {
                 console.log('Error getting document', err);
             });
-        const walk = this.db.collection("walks").doc(walkID);
+        const walk = db.collection("walks").doc(walkID);
         let walkDoc = walk.get()
             .then(doc => {
                 if (!doc.exists) {
@@ -72,7 +71,7 @@ export default class Database  {
     }
 
     leaveWalk =(userID, walkID) => {
-        const user = this.db.collection("user").doc(userID);
+        const user = db.collection("user").doc(userID);
         let getDoc = user.get()
             .then(doc => {
                 if (!doc.exists) {
@@ -94,7 +93,7 @@ export default class Database  {
     getNearbyWalks = (location) => {
         // From location get a list of 10 nearby walks with a radius of 5
 
-        const walk = this.db.collection("walks");
+        const walk = db.collection("walks");
         let getDoc = walk.get()
             .then(doc => {
                 if (!doc.exists) {
@@ -110,7 +109,7 @@ export default class Database  {
     }
 
     getUserWalkIDs = (userID) => {
-        const user = this.db.collection("user").doc(userID);
+        const user = db.collection("user").doc(userID);
         let getDoc = user.get()
             .then(doc => {
                 if (!doc.exists) {
@@ -127,7 +126,7 @@ export default class Database  {
     }
 
     getWalk = (walkID) => {
-        const walk = this.db.collection("walks").doc(walkID);
+        const walk = db.collection("walks").doc(walkID);
         let getDoc = walk.get()
             .then(doc => {
                 if (!doc.exists) {
@@ -143,7 +142,7 @@ export default class Database  {
     }
 
     getProfile = (userID) => {
-        const user = this.db.collection("users").doc(userID);
+        const user = db.collection("users").doc(userID);
         let getDoc = user.get()
             .then(doc => {
                 if (!doc.exists) {
