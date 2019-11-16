@@ -12,10 +12,8 @@ export default class Database  {
             databaseURL: "https://peerwalk-56316.firebaseio.com",
             projectId: "peerwalk-56316",
             storageBucket: "peerwalk-56316.appspot.com",
-            messagingSenderId: "530706802982",
-            appId: "1:530706802982:web:a191560b555d13569479e7",
-            measurementId: "G-9NMGPWMGEB"
         };
+        console.log("here");
         firebase.initializeApp(this.firebaseConfig);
         this.state = {
             isReady: false

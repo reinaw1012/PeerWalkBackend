@@ -12,8 +12,9 @@ export default class HomeScreen extends React.Component {
             passwordText: "654321",
             userData: {}
         };
+        const db = new Database();
+        console.log("App here");
     }
-    db = new Database();
     logIn = async (data) => {
         console.log(data);
         const userData = new Promise(this.db.firebaseLogIn(data))
