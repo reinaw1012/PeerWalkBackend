@@ -1,5 +1,6 @@
 # PeerWalk Backend
 ![alt text](logo_resized.png)
+
 These are the backend files for Peerwalk, a safety walk application that helps college students to walk back home safely at night. [Check out the GitHub repo for the overall app here!](https://github.com/Asap7772/PeerWalk)
 
 ## What it does
